@@ -29,31 +29,38 @@ struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct t
 	int i=0, j=0, k = 0;
 	int L =( ALen + BLen);
 	struct transaction *C = (struct transaction *)malloc(sizeof(struct transaction )*(L+2));
-	 while(i < ALen)
+	 while(i < ALen && j<BLen)
 	{
-		while (j<BLen)
-		{
-			if (A[i].date < B[j].date)
+		
+			if (A[i].amount < B[j].amount)
 			{
-			C[k] = B[j];
-			k++; j++;
+			C[k] = A[i];
+			k++; i++;
 			}
-			else if (A[i].date == B[j].date)
+			else if (A[i].amount == B[j].amount)
 			{
 				C[k] = A[i];
 				k++; i++;
 				C[k] = B[j];
 				k++; j++;
-
 			}
 	       else
 	         {
-		        C[k] = A[i];
-				k++; i++;
-	          }
-			
-		}
+		        C[k] = B[j];
+				k++; j++;
+	          }		
 	}
+	 while (i == ALen&&j!=BLen)
+	 {
+		 C[k] = B[j];
+		 j++; k++;
+	 }
+	 while (j == BLen&&i!=ALen)
+	 {
+		 C[k] = A[i];
+		 i++;
+		 k++;
+	 }
 	return C;
 }
 		
